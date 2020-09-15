@@ -37,6 +37,14 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public boolean isReady(String name) {
 		switch (name) {
+			case "st_collector_floor_intake":
+				return fSharedInputValues.getBooleanRisingEdge("ipb_driver_b");
+			case "st_collector_extend":
+				return fSharedInputValues.getBooleanRisingEdge("ipb_driver_a");
+			case "st_collector_retract":
+				return fSharedInputValues.getBooleanRisingEdge("ipb_driver_x");
+			case "st_collector_stop":
+				return fSharedInputValues.getBooleanRisingEdge("ipb_driver_y");
 			default:
 				return false;
 		}

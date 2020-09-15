@@ -34,6 +34,10 @@ public class ModelFactory_Behaviors extends AbstractModelFactory {
 
 			case "bh_drivetrain":
 				return new Drivetrain(fSharedInputValues, fSharedOutputValues, config, fSharedRobotConfiguration);
+			case "bh_collector_zero":
+				return new Collector_Zero(fSharedInputValues, fSharedOutputValues, config, fSharedRobotConfiguration);
+			case "bh_collector_states":
+				return new Collector_States(fSharedInputValues, fSharedOutputValues, config, fSharedRobotConfiguration);
 
 			// State not found
 			default:

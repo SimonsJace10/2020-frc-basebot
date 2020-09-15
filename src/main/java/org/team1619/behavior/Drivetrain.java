@@ -46,8 +46,6 @@ public class Drivetrain implements Behavior {
 
 	@Override
 	public void update() {
-		sLogger.debug("updating");
-
 
 		double X = fSharedInputValues.getNumeric(fX);
 		double Y = fSharedInputValues.getNumeric(fY);
