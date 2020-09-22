@@ -60,6 +60,7 @@ public class Collector_Zero implements Behavior {
 	@Override
 	public boolean isDone() {
 		if (mTimeoutTimer.isDone()) {
+			fSharedInputValues.setBoolean("ipb_collector_has_been_zeroed", true);
 			return true;
 		}
 		return false;
