@@ -10,6 +10,7 @@ single_state:
   st_collector_zero:
     behavior: bh_collector_zero
     behavior_config:
+      solenoid: false
       timeout_time: 500
 
   st_collector_floor_intake:

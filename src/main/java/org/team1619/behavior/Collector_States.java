@@ -54,7 +54,7 @@ public class Collector_States implements Behavior {
 
 	@Override
 	public boolean isDone() {
-		return true;
+		return false;
 	}
 
 	@Override

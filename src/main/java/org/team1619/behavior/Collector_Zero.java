@@ -12,7 +12,7 @@ import org.uacr.utilities.logging.Logger;
 import java.util.Set;
 
 /**
- * Example behavior to copy for other behaviors
+ * Behavior that contains the logic for 'zeroing' the collector (meaning effectively calibrate it by putting the collector in and ceasing motors.)
  */
 
 public class Collector_Zero implements Behavior {
@@ -32,7 +32,6 @@ public class Collector_Zero implements Behavior {
 		fSharedOutputValues = outputValues;
 
 		mTimeoutTimer = new Timer();
-		mTimeoutTimer.start(mTimeoutTime);
 	}
 
 
@@ -41,15 +40,21 @@ public class Collector_Zero implements Behavior {
 	public void initialize(String stateName, Config config) {
 		sLogger.debug("Entering state {}", stateName);
 
-		mSolenoid = config.getBoolean("mSolenoid");
-
+		// Get the solenoid value for the collector
+		mSolenoid = config.getBoolean("solenoid");
+		// Get timeout timer time
 		mTimeoutTime = config.getInt("timeout_time");
+		// Initialize the timer
+		mTimeoutTimer.start(mTimeoutTime);
+		/* Set the collector in and motors to 0
+		 They can be in initialize() because zero only runs once */
+		fSharedOutputValues.setBoolean("opb_collector_solenoid", false);
+		fSharedOutputValues.setNumeric("obn_collector_rollers", "percent", 0.0);
 	}
 
 	@Override
 	public void update() {
-		fSharedOutputValues.setBoolean("opb_collector_solenoid", false);
-		fSharedOutputValues.setNumeric("obn_collector_rollers", "percent", 0.0);
+
 	}
 
 	@Override

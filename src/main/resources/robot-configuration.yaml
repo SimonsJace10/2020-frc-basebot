@@ -14,7 +14,8 @@ general:
       default: [st_drivetrain]
 
     ss_collector:
-      priority_level_1: [st_collector_floor_intake, st_collector_extend, st_collector_retract, st_collector_stop, st_collector_zero]
+      priority_level_2: [st_collector_zero]
+      priority_level_1: [st_collector_floor_intake, st_collector_extend, st_collector_retract]
       default: [st_collector_stop]
 
   subsystems: [ss_drivetrain, ss_collector]

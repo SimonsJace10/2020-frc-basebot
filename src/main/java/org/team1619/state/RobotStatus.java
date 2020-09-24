@@ -24,11 +24,10 @@ public class RobotStatus extends AbstractRobotStatus {
 
 	@Override
 	public void initialize() {
-		// Zeroes the collector
-		fSharedInputValues.setBoolean("ipb_collector_has_been_zeroed", false);
 		// Zero
 		if (!fSharedInputValues.getBoolean("ipb_robot_has_been_zeroed")) {
-
+			// Zeroes the collector
+			fSharedInputValues.setBoolean("ipb_collector_has_been_zeroed", false);
 		}
 	}
 
