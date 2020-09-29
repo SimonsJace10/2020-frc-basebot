@@ -12,46 +12,63 @@ import org.uacr.utilities.logging.Logger;
 import java.util.Set;
 
 /**
- * Zeros the collector by extending it and turning off the rollers
+ * Controls the hopper
  */
 
-public class Collector_Zero implements Behavior {
+public class Hopper_Zero implements Behavior {
 
-	private static final Logger sLogger = LogManager.getLogger(Collector_Zero.class);
+	private static final Logger sLogger = LogManager.getLogger(Hopper_Zero.class);
 	private static final Set<String> sSubsystems = Set.of("ss_collector");
 
 	private final InputValues fSharedInputValues;
 	private final OutputValues fSharedOutputValues;
 
+	private boolean mKicker;
+	private double mHopperSpeed;
+
 	private Timer mTimeoutTimer;
 	private long mTimeoutTime;
 
-	public Collector_Zero(InputValues inputValues, OutputValues outputValues, Config config, RobotConfiguration robotConfiguration) {
+	public Hopper_Zero(InputValues inputValues, OutputValues outputValues, Config config, RobotConfiguration robotConfiguration) {
 		fSharedInputValues = inputValues;
 		fSharedOutputValues = outputValues;
 
+		mKicker = false;
+		mHopperSpeed = 0.0;
+
 		mTimeoutTimer = new Timer();
+		mTimeoutTime = 0;
 	}
-
-
 
 	@Override
 	public void initialize(String stateName, Config config) {
 		sLogger.debug("Entering state {}", stateName);
 
+		mKicker = config.getBoolean("kicker");
+		mHopperSpeed = config.getDouble("hopper_speed");
+
 		mTimeoutTime = config.getInt("timeout_time");
 		mTimeoutTimer.start(mTimeoutTime);
+
+		fSharedOutputValues.setBoolean("opb_hopper_kicker", mKicker);
 	}
 
 	@Override
 	public void update() {
-		fSharedOutputValues.setBoolean("opb_collector_solenoid", true);
-		fSharedOutputValues.setNumeric("opn_collector_rollers", "percent", 0.0);
+		if (fSharedInputValues.getBoolean("ipb_hopper_home")) {
+			fSharedOutputValues.setNumeric("opn_hopper", "percent", mHopperSpeed);
+			fSharedInputValues.setBoolean("ipb_hopper_has_been_zeroed", true);
+		}
+		else if (mTimeoutTimer.isDone()) {
+			fSharedOutputValues.setNumeric("opn_hopper", "percent", mHopperSpeed);
+			fSharedInputValues.setBoolean("ipb_hopper_zero_has_timed_out", true);
+		}
 	}
 
 	@Override
 	public void dispose() {
-
+		fSharedOutputValues.setNumeric("opn_hopper", "percent", 0.0);
+		fSharedOutputValues.setBoolean("opb_hopper_kicker", mKicker);
 	}
 
 	@Override

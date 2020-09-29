@@ -32,12 +32,19 @@ public class ModelFactory_Behaviors extends AbstractModelFactory {
 
 		switch (name) {
 
+			// Drivetrain
 			case "bh_drivetrain":
 				return new Drivetrain(fSharedInputValues, fSharedOutputValues, config, fSharedRobotConfiguration);
+			// Collector
 			case "bh_collector_zero":
 				return new Collector_Zero(fSharedInputValues, fSharedOutputValues, config, fSharedRobotConfiguration);
 			case "bh_collector_states":
 				return new Collector_States(fSharedInputValues, fSharedOutputValues, config, fSharedRobotConfiguration);
+			// Hopper
+			case "bh_hopper_zero":
+				return new Hopper_Zero(fSharedInputValues, fSharedOutputValues, config, fSharedRobotConfiguration);
+			case "bh_hopper_states":
+				return new Hopper_States(fSharedInputValues, fSharedOutputValues, config, fSharedRobotConfiguration);
 
 			// State not found
 			default:

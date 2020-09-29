@@ -12,7 +12,7 @@ import org.uacr.utilities.logging.Logger;
 import java.util.Set;
 
 /**
- * Example behavior to copy for other behaviors
+ * Controls the collector by extending/retracting it and turning the rollers on/off
  */
 
 public class Collector_States implements Behavior {
@@ -37,9 +37,8 @@ public class Collector_States implements Behavior {
 		boolean solenoid = config.getBoolean("solenoid", true);
 		double rollerSpeed = config.getDouble("roller_speed", 0.0);
 
-		fSharedOutputValues.setBoolean("opn_collector_extend", solenoid);
+		fSharedOutputValues.setBoolean("opb_collector_extend", solenoid);
 		fSharedOutputValues.setNumeric("opn_collector_rollers", "percent", rollerSpeed);
-		fSharedInputValues.setBoolean("ipn_collector_position", solenoid);
 	}
 
 	@Override
