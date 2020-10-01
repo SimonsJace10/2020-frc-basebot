@@ -53,6 +53,13 @@ single_state:
       kicker: false
       timeout_time: 0.0
 
+  st_hopper_shoot:
+    behavior: bh_hopper_states
+    behavior_config:
+      hopper_speed: 0.0
+      kicker: false
+      timeout_time: 0.0
+
   st_hopper_stop:
     behavior: bh_hopper_states
     behavior_config:
