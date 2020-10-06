@@ -31,15 +31,14 @@ public class TeleopModeLogic extends AbstractModeLogic {
 
 	@Override
 	public void update() {
-		if(fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_trigger")){
+		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_trigger")){
 			collectorIsExtended = true;
 			rollersAreOn = !rollersAreOn;
 		}
-		if(fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_bumper")){
+		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_bumper")){
 			collectorIsExtended = false;
 			rollersAreOn = false;
 		}
-
 	}
 
 	@Override

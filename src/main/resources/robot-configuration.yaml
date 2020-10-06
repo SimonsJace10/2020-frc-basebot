@@ -17,7 +17,12 @@ general:
       priority_level_2: [st_collector_zero]
       priority_level_1: [st_collector_floor_intake, st_collector_extend, st_collector_retract]
 
-  subsystems: [ss_drivetrain, ss_collector]
+    ss_hopper:
+      priority_level_2: [st_hopper_zero]
+      priority_level_1: [st_hopper_home, st_hopper_collect, st_hopper_shoot]
+      default: [st_hopper_stop]
+
+  subsystems: [ss_drivetrain, ss_collector, ss_hopper]
 
   input_booleans: [
     ipb_driver_left_trigger, ipb_operator_left_bumper, ipb_operator_left_trigger
