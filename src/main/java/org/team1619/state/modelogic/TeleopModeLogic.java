@@ -14,8 +14,9 @@ import org.uacr.utilities.logging.Logger;
 public class TeleopModeLogic extends AbstractModeLogic {
 
 	private static final Logger sLogger = LogManager.getLogger(TeleopModeLogic.class);
-	boolean mCollectorOut = true;
-	boolean mRollersAreOn = false;
+
+	boolean collectorIsExtended;
+	boolean rollersAreOn;
 
 	public TeleopModeLogic(InputValues inputValues, RobotConfiguration robotConfiguration) {
 		super(inputValues, robotConfiguration);
@@ -24,18 +25,21 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public void initialize() {
 		sLogger.info("***** TELEOP *****");
+		collectorIsExtended = true;
+		rollersAreOn = false;
 	}
 
 	@Override
 	public void update() {
-		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_trigger")) {
-			mCollectorOut = true;
-			mRollersAreOn = !mRollersAreOn;
+		if(fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_trigger")){
+			collectorIsExtended = true;
+			rollersAreOn = !rollersAreOn;
 		}
-		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_bumper")) {
-			mCollectorOut = false;
-			mRollersAreOn = false;
+		if(fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_bumper")){
+			collectorIsExtended = false;
+			rollersAreOn = false;
 		}
+
 	}
 
 	@Override
@@ -49,11 +53,11 @@ public class TeleopModeLogic extends AbstractModeLogic {
 			case "st_collector_zero":
 				return !fSharedInputValues.getBoolean("ipb_collector_has_been_zeroed");
 			case "st_collector_floor_intake":
-				return mCollectorOut && mRollersAreOn;
+				return collectorIsExtended && rollersAreOn;
 			case "st_collector_extend":
-				return mCollectorOut && !mRollersAreOn;
+				return collectorIsExtended && !rollersAreOn;
 			case "st_collector_retract":
-				return !mCollectorOut && !mRollersAreOn;
+				return !collectorIsExtended && !rollersAreOn;
 			default:
 				return false;
 		}
