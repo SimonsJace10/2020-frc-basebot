@@ -19,10 +19,10 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	boolean rollersAreOn;
 
 	// Controller Inputs
-	boolean leftTrigger;
-	boolean leftBumper;
-	boolean rightTrigger;
-	boolean rightBumper;
+	boolean mFloorIntake = false;
+	boolean mPrime = false;
+	boolean mShoot = false;
+	boolean mProtect = false;
 
 	public TeleopModeLogic(InputValues inputValues, RobotConfiguration robotConfiguration) {
 		super(inputValues, robotConfiguration);
@@ -31,23 +31,39 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public void initialize() {
 		sLogger.info("***** TELEOP *****");
-		collectorIsExtended = true;
-		rollersAreOn = false;
+		//collectorIsExtended = true;
+		//rollersAreOn = false;
 	}
 
 	@Override
 	public void update() {
-		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_trigger")){
-			leftTrigger = true;
+
+		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_trigger")) {
+			mFloorIntake = !mFloorIntake;
+			mPrime = false;
+			mShoot = false;
+			mProtect = false;
 		}
-		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_bumper")){
-			leftBumper = true;
+		else if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_bumper")) {
+			mFloorIntake = false;
+			mPrime = true;
+			mShoot = false;
+			mProtect = false;
 		}
-		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_trigger")) {
-			rightTrigger = true;
+		else if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_trigger")) {
+			mFloorIntake = false;
+			mPrime = false;
+			mShoot = true;
+			mProtect = false;
 		}
-		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_bumper")) {
-			rightBumper = true;
+		else if (fSharedInputValues.getBooleanFallingEdge("ipb_operator_right_trigger")) {
+			mShoot = false;
+		}
+		else if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_bumper")) {
+			mFloorIntake = false;
+			mPrime = false;
+			mShoot = false;
+			mProtect = true;
 		}
 	}
 
@@ -58,26 +74,31 @@ public class TeleopModeLogic extends AbstractModeLogic {
 
 	@Override
 	public boolean isReady(String name) {
-//		switch (name) {
-//			case "st_collector_zero":
-//				return !fSharedInputValues.getBoolean("ipb_collector_has_been_zeroed");
-//			case "st_collector_floor_intake":
-//				return collectorIsExtended && rollersAreOn;
-//			case "st_collector_extend":
-//				return collectorIsExtended && !rollersAreOn;
-//			case "st_collector_retract":
-//				return !collectorIsExtended && !rollersAreOn;
-//			default:
-//				return false;
-//		}
 		switch (name) {
 			case "pl_floor_intake":
+				return mFloorIntake;
+			case "pl_prime":
+				return mPrime;
+			case "pl_shoot":
+				return mShoot;
+			case "pl_protect":
+				return mProtect;
+			default:
+				return false;
 		}
 	}
 
 	@Override
 	public boolean isDone(String name, State state) {
 		switch (name) {
+			case "pl_floor_intake":
+				return !mFloorIntake;
+			case "pl_prime":
+				return !mPrime;
+			case "pl_shoot":
+				return !mShoot;
+			case "pl_protect":
+				return !mProtect;
 			default:
 				return state.isDone();
 		}
