@@ -18,6 +18,12 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	boolean collectorIsExtended;
 	boolean rollersAreOn;
 
+	// Controller Inputs
+	boolean leftTrigger;
+	boolean leftBumper;
+	boolean rightTrigger;
+	boolean rightBumper;
+
 	public TeleopModeLogic(InputValues inputValues, RobotConfiguration robotConfiguration) {
 		super(inputValues, robotConfiguration);
 	}
@@ -32,12 +38,16 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public void update() {
 		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_trigger")){
-			collectorIsExtended = true;
-			rollersAreOn = !rollersAreOn;
+			leftTrigger = true;
 		}
 		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_bumper")){
-			collectorIsExtended = false;
-			rollersAreOn = false;
+			leftBumper = true;
+		}
+		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_trigger")) {
+			rightTrigger = true;
+		}
+		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_bumper")) {
+			rightBumper = true;
 		}
 	}
 
@@ -48,17 +58,20 @@ public class TeleopModeLogic extends AbstractModeLogic {
 
 	@Override
 	public boolean isReady(String name) {
+//		switch (name) {
+//			case "st_collector_zero":
+//				return !fSharedInputValues.getBoolean("ipb_collector_has_been_zeroed");
+//			case "st_collector_floor_intake":
+//				return collectorIsExtended && rollersAreOn;
+//			case "st_collector_extend":
+//				return collectorIsExtended && !rollersAreOn;
+//			case "st_collector_retract":
+//				return !collectorIsExtended && !rollersAreOn;
+//			default:
+//				return false;
+//		}
 		switch (name) {
-			case "st_collector_zero":
-				return !fSharedInputValues.getBoolean("ipb_collector_has_been_zeroed");
-			case "st_collector_floor_intake":
-				return collectorIsExtended && rollersAreOn;
-			case "st_collector_extend":
-				return collectorIsExtended && !rollersAreOn;
-			case "st_collector_retract":
-				return !collectorIsExtended && !rollersAreOn;
-			default:
-				return false;
+			case "pl_floor_intake":
 		}
 	}
 
