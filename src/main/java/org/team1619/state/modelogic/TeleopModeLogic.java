@@ -15,9 +15,6 @@ public class TeleopModeLogic extends AbstractModeLogic {
 
 	private static final Logger sLogger = LogManager.getLogger(TeleopModeLogic.class);
 
-	boolean collectorIsExtended;
-	boolean rollersAreOn;
-
 	// Controller Inputs
 	boolean mFloorIntake = false;
 	boolean mPrime = false;
