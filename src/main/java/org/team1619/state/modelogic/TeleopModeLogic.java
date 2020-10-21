@@ -15,6 +15,12 @@ public class TeleopModeLogic extends AbstractModeLogic {
 
 	private static final Logger sLogger = LogManager.getLogger(TeleopModeLogic.class);
 
+	// Controller Inputs
+	boolean mFloorIntake = false;
+	boolean mPrime = false;
+	boolean mShoot = false;
+	boolean mProtect = false;
+
 	public TeleopModeLogic(InputValues inputValues, RobotConfiguration robotConfiguration) {
 		super(inputValues, robotConfiguration);
 	}
@@ -22,11 +28,40 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public void initialize() {
 		sLogger.info("***** TELEOP *****");
+		//collectorIsExtended = true;
+		//rollersAreOn = false;
 	}
 
 	@Override
 	public void update() {
 
+		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_trigger")) {
+			mFloorIntake = !mFloorIntake;
+			mPrime = false;
+			mShoot = false;
+			mProtect = false;
+		}
+		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_bumper")) {
+			mFloorIntake = false;
+			mPrime = false;
+			mShoot = false;
+			mProtect = true;
+		}
+		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_trigger")) {
+			mFloorIntake = false;
+			mPrime = false;
+			mShoot = true;
+			mProtect = false;
+		}
+		if (fSharedInputValues.getBooleanFallingEdge("ipb_operator_right_trigger")) {
+			mShoot = false;
+		}
+		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_bumper")) {
+			mFloorIntake = false;
+			mPrime = true;
+			mShoot = false;
+			mProtect = false;
+		}
 	}
 
 	@Override
@@ -37,6 +72,18 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public boolean isReady(String name) {
 		switch (name) {
+			case "st_collector_zero":
+				return !fSharedInputValues.getBoolean("ipb_collector_has_been_zeroed");
+			case "st_hopper_zero":
+				return !fSharedInputValues.getBoolean("ipb_hopper_has_been_zeroed");
+			case "pl_floor_intake":
+				return mFloorIntake;
+			case "pl_prime":
+				return mPrime;
+			case "pl_shoot":
+				return mShoot;
+			case "pl_protect":
+				return mProtect;
 			default:
 				return false;
 		}
@@ -45,6 +92,14 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public boolean isDone(String name, State state) {
 		switch (name) {
+			case "pl_floor_intake":
+				return !mFloorIntake;
+			case "pl_prime":
+				return !mPrime;
+			case "pl_shoot":
+				return !mShoot;
+			case "pl_protect":
+				return !mProtect;
 			default:
 				return state.isDone();
 		}
