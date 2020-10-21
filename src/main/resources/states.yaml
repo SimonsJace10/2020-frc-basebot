@@ -15,19 +15,19 @@ single_state:
   st_collector_floor_intake:
     behavior: bh_collector_states
     behavior_config:
-      solenoid: false
+      solenoid: true
       roller_speed: 0.9
 
   st_collector_extend:
     behavior: bh_collector_states
     behavior_config:
-      solenoid: false
+      solenoid: true
       roller_speed: 0.0
 
   st_collector_retract:
     behavior: bh_collector_states
     behavior_config:
-      solenoid: true
+      solenoid: false
       roller_speed: 0.0
 
   # Hopper
@@ -42,8 +42,8 @@ single_state:
   st_hopper_home:
     behavior: bh_hopper_states
     behavior_config:
-      hopper_speed: 0.1
-      kicker_position: false
+      hopper_speed: 0.5
+      kicker: false
       timeout_time: 500
 
   st_hopper_collect:
@@ -56,8 +56,8 @@ single_state:
   st_hopper_shoot:
     behavior: bh_hopper_states
     behavior_config:
-      hopper_speed: 0.0
-      kicker: false
+      hopper_speed: 0.8
+      kicker: true
       timeout_time: 0.0
 
   st_hopper_stop:

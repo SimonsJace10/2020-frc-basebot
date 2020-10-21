@@ -41,26 +41,26 @@ public class TeleopModeLogic extends AbstractModeLogic {
 			mShoot = false;
 			mProtect = false;
 		}
-		else if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_bumper")) {
+		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_bumper")) {
 			mFloorIntake = false;
-			mPrime = true;
+			mPrime = false;
 			mShoot = false;
-			mProtect = false;
+			mProtect = true;
 		}
-		else if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_trigger")) {
+		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_trigger")) {
 			mFloorIntake = false;
 			mPrime = false;
 			mShoot = true;
 			mProtect = false;
 		}
-		else if (fSharedInputValues.getBooleanFallingEdge("ipb_operator_right_trigger")) {
+		if (fSharedInputValues.getBooleanFallingEdge("ipb_operator_right_trigger")) {
 			mShoot = false;
 		}
-		else if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_bumper")) {
+		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_bumper")) {
 			mFloorIntake = false;
-			mPrime = false;
+			mPrime = true;
 			mShoot = false;
-			mProtect = true;
+			mProtect = false;
 		}
 	}
 
@@ -72,6 +72,10 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public boolean isReady(String name) {
 		switch (name) {
+			case "st_collector_zero":
+				return !fSharedInputValues.getBoolean("ipb_collector_has_been_zeroed");
+			case "st_hopper_zero":
+				return !fSharedInputValues.getBoolean("ipb_hopper_has_been_zeroed");
 			case "pl_floor_intake":
 				return mFloorIntake;
 			case "pl_prime":

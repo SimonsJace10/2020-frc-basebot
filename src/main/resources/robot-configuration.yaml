@@ -7,6 +7,7 @@ general:
     sequences:
 
     parallels:
+      priority_level_1: [pl_floor_intake, pl_prime, pl_shoot, pl_protect]
 
     ss_drivetrain:
       priority_level_2: []
@@ -15,7 +16,8 @@ general:
 
     ss_collector:
       priority_level_2: [st_collector_zero]
-      priority_level_1: [st_collector_floor_intake, st_collector_extend, st_collector_retract]
+      priority_level_1: [st_collector_floor_intake, st_collector_retract]
+      default: [st_collector_extend]
 
     ss_hopper:
       priority_level_2: [st_hopper_zero]
@@ -25,7 +27,7 @@ general:
   subsystems: [ss_drivetrain, ss_collector, ss_hopper]
 
   input_booleans: [
-    ipb_driver_left_trigger, ipb_operator_left_bumper, ipb_operator_left_trigger
+    ipb_driver_left_trigger, ipb_operator_left_bumper, ipb_operator_left_trigger, ipb_operator_right_trigger, ipb_operator_right_bumper
   ]
 
   input_numerics: [

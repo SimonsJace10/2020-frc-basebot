@@ -37,7 +37,7 @@ public class Collector_States implements Behavior {
 		boolean solenoid = config.getBoolean("solenoid", true);
 		double rollerSpeed = config.getDouble("roller_speed", 0.0);
 
-		fSharedOutputValues.setBoolean("opb_collector_extend", solenoid);
+		fSharedOutputValues.setBoolean("opb_collector_solenoid", solenoid);
 		fSharedOutputValues.setNumeric("opn_collector_rollers", "percent", rollerSpeed);
 	}
 

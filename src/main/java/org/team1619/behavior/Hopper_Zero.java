@@ -18,7 +18,7 @@ import java.util.Set;
 public class Hopper_Zero implements Behavior {
 
 	private static final Logger sLogger = LogManager.getLogger(Hopper_Zero.class);
-	private static final Set<String> sSubsystems = Set.of("ss_collector");
+	private static final Set<String> sSubsystems = Set.of("ss_hopper");
 
 	private final InputValues fSharedInputValues;
 	private final OutputValues fSharedOutputValues;
