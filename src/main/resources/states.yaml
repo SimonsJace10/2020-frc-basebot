@@ -67,6 +67,38 @@ single_state:
       kicker: false
       timeout_time: 0.0
 
+  # Elevator
+
+  st_elevator_zero:
+    behavior: bh_elevator_zero
+    behavior_config:
+      elevator_speed: 0.0
+      timeout_time: 500
+
+  st_elevator_load:
+    behavior: bh_elevator_states
+    behavior_config:
+      elevator_speed: 0.0
+      timeout_time: 0
+
+  st_elevator_prime:
+    behavior: bh_elevator_states
+    behavior_config:
+      elevator_speed: 0.0
+      timeout_time: 0
+
+  st_elevator_shoot:
+    behavior: bh_elevator_states
+    behavior_config:
+      elevator_speed: 0.0
+      timeout_time: 0
+
+  st_elevator_stop:
+    behavior: bh_elevator_states
+    behavior_config:
+      elevator_speed: 0.0
+      timeout_time: 0
+
 done_for_time_state:
 
 parallel_state:
