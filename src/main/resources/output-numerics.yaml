@@ -60,6 +60,11 @@ talon:
     device_number: 4
     inverted: true
 
+  # Elevator
+
+  opn_elevator:
+    device_number:
+    inverted: true
 
 victor:
 

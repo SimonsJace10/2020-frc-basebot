@@ -23,6 +23,10 @@ public class Elevator_Zero implements Behavior {
 	private final InputValues fSharedInputValues;
 	private final OutputValues fSharedOutputValues;
 
+	private boolean mBeamSensor;
+	private double mElevatorSpeed;
+	private double mZeroingThreshold;
+
 //	private boolean mKicker;
 //	private double mHopperSpeed;
 
@@ -35,6 +39,9 @@ public class Elevator_Zero implements Behavior {
 
 //		mKicker = false;
 //		mHopperSpeed = 0.0;
+		mElevatorSpeed = 0.0;
+		mBeamSensor = false;
+		mZeroingThreshold = 0.0;
 
 		mTimeoutTimer = new Timer();
 		mTimeoutTime = 0;
@@ -46,6 +53,9 @@ public class Elevator_Zero implements Behavior {
 
 //		mKicker = config.getBoolean("kicker");
 //		mHopperSpeed = config.getDouble("hopper_speed");
+		mBeamSensor = config.getBoolean("beam_sensor");
+		mElevatorSpeed = config.getDouble("elevator_speed");
+		mZeroingThreshold = config.getDouble("zeroing_threshold");
 
 		mTimeoutTime = config.getInt("timeout_time");
 		mTimeoutTimer.start(mTimeoutTime);
@@ -55,21 +65,24 @@ public class Elevator_Zero implements Behavior {
 
 	@Override
 	public void update() {
-//		if (fSharedInputValues.getBoolean("ipb_hopper_home_switch")) {
-//			fSharedOutputValues.setNumeric("opn_hopper", "percent", 0.0);
-//			fSharedInputValues.setBoolean("ipb_elevator_has_been_zeroed", true);
-//		}
-//		else if (mTimeoutTimer.isDone()) {
-//			fSharedOutputValues.setNumeric("opn_hopper", "percent", mHopperSpeed);
-//			fSharedInputValues.setBoolean("ipb_elevator_has_been_zeroed", true);
-//			sLogger.debug("hopper has timed out");
-//		}
+		if (Math.abs(fSharedInputValues.getNumeric("ipn_elevator_primary_position")) < mZeroingThreshold) {
+			fSharedOutputValues.setOutputFlag("opn_elevator", "zero");
+			fSharedOutputValues.setNumeric("opn_elevator", "percent", 0.0);
+			fSharedInputValues.setBoolean("ipb_elevator_has_been_zeroed", true);
+		}
+		else if (mTimeoutTimer.isDone()) {
+			fSharedOutputValues.setOutputFlag("opn_elevator", "zero");
+			fSharedOutputValues.setNumeric("opn_elevator", "percent", 0.0);
+			fSharedInputValues.setBoolean("ipb_elevator_has_been_zeroed", true);
+			sLogger.debug("elevator has timed out");
+		}
 	}
 
 	@Override
 	public void dispose() {
 //		fSharedOutputValues.setNumeric("opn_hopper", "percent", 0.0);
 //		fSharedOutputValues.setBoolean("opb_hopper_kicker", mKicker);
+		fSharedOutputValues.setNumeric("opn_elevator", "percent", 0.0);
 	}
 
 	@Override
