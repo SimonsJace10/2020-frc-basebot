@@ -28,8 +28,6 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public void initialize() {
 		sLogger.info("***** TELEOP *****");
-		//collectorIsExtended = true;
-		//rollersAreOn = false;
 	}
 
 	@Override
@@ -54,7 +52,10 @@ public class TeleopModeLogic extends AbstractModeLogic {
 			mProtect = false;
 		}
 		if (fSharedInputValues.getBooleanFallingEdge("ipb_operator_right_trigger")) {
+			mFloorIntake = false;
+			mPrime = false;
 			mShoot = false;
+			mProtect = false;
 		}
 		if (fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_bumper")) {
 			mFloorIntake = false;
@@ -72,10 +73,14 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public boolean isReady(String name) {
 		switch (name) {
+			// Zeroes
 			case "st_collector_zero":
 				return !fSharedInputValues.getBoolean("ipb_collector_has_been_zeroed");
 			case "st_hopper_zero":
 				return !fSharedInputValues.getBoolean("ipb_hopper_has_been_zeroed");
+			case "st_elevator_zero":
+				return !fSharedInputValues.getBoolean("ipb_elevator_has_been_zeroed");
+			// States
 			case "pl_floor_intake":
 				return mFloorIntake;
 			case "pl_prime":

@@ -105,4 +105,3 @@ digital_input:
   ipb_hopper_home_switch:
     id: 1
     inverted: false
-

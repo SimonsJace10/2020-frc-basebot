@@ -12,7 +12,7 @@ import org.uacr.utilities.logging.Logger;
 import java.util.Set;
 
 /**
- * Controls the hopper
+ * Controls the elevator
  */
 
 public class Elevator_Zero implements Behavior {
@@ -27,9 +27,6 @@ public class Elevator_Zero implements Behavior {
 	private double mElevatorSpeed;
 	private double mZeroingThreshold;
 
-//	private boolean mKicker;
-//	private double mHopperSpeed;
-
 	private Timer mTimeoutTimer;
 	private long mTimeoutTime;
 
@@ -37,8 +34,6 @@ public class Elevator_Zero implements Behavior {
 		fSharedInputValues = inputValues;
 		fSharedOutputValues = outputValues;
 
-//		mKicker = false;
-//		mHopperSpeed = 0.0;
 		mElevatorSpeed = 0.0;
 		mBeamSensor = false;
 		mZeroingThreshold = 0.0;
@@ -51,16 +46,12 @@ public class Elevator_Zero implements Behavior {
 	public void initialize(String stateName, Config config) {
 		sLogger.debug("Entering state {}", stateName);
 
-//		mKicker = config.getBoolean("kicker");
-//		mHopperSpeed = config.getDouble("hopper_speed");
 		mBeamSensor = config.getBoolean("beam_sensor");
 		mElevatorSpeed = config.getDouble("elevator_speed");
 		mZeroingThreshold = config.getDouble("zeroing_threshold");
 
 		mTimeoutTime = config.getInt("timeout_time");
 		mTimeoutTimer.start(mTimeoutTime);
-
-//		fSharedOutputValues.setBoolean("opb_hopper_kicker", mKicker);
 	}
 
 	@Override
@@ -80,9 +71,8 @@ public class Elevator_Zero implements Behavior {
 
 	@Override
 	public void dispose() {
-//		fSharedOutputValues.setNumeric("opn_hopper", "percent", 0.0);
-//		fSharedOutputValues.setBoolean("opb_hopper_kicker", mKicker);
 		fSharedOutputValues.setNumeric("opn_elevator", "percent", 0.0);
+		fSharedInputValues.setBoolean("ipb_elevator_beam_sensor", false);
 	}
 
 	@Override

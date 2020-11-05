@@ -22,40 +22,45 @@ public class Elevator_States implements Behavior {
 	private final InputValues fSharedInputValues;
 	private final OutputValues fSharedOutputValues;
 
-	private boolean mKicker;
-	private double mHopperSpeed;
+	private double mElevatorSpeed;
+	private boolean mBeamSensor;
 
 	public Elevator_States(InputValues inputValues, OutputValues outputValues, Config config, RobotConfiguration robotConfiguration) {
 		fSharedInputValues = inputValues;
 		fSharedOutputValues = outputValues;
 
-		mKicker = false;
-		mHopperSpeed = 0.0;
+		mElevatorSpeed = 0.0;
+		mBeamSensor = false;
 	}
 
 	@Override
 	public void initialize(String stateName, Config config) {
 		sLogger.debug("Entering state {}", stateName);
 
-		mKicker = config.getBoolean("kicker");
-		mHopperSpeed = config.getDouble("hopper_speed");
+		mElevatorSpeed = config.getDouble("elevator_speed");
+		mBeamSensor = config.getBoolean("beam_sensor");
 	}
 
 	@Override
 	public void update() {
-		fSharedOutputValues.setNumeric("opn_hopper", "percent", mHopperSpeed);
-		fSharedOutputValues.setBoolean("opb_hopper_kicker", mKicker);
+		fSharedOutputValues.setNumeric("opn_elevator", "percent", mElevatorSpeed);
+		fSharedOutputValues.setBoolean("ipb_elevator_beam_sensor", mBeamSensor);
 	}
 
 	@Override
 	public void dispose() {
-		fSharedOutputValues.setNumeric("opn_hopper", "percent", 0.0);
-		fSharedOutputValues.setBoolean("opb_hopper_kicker", mKicker);
+		fSharedOutputValues.setNumeric("opn_elevator", "percent", 0.0);
+		fSharedOutputValues.setBoolean("ipb_elevator_beam_sensor", false);
 	}
 
 	@Override
 	public boolean isDone() {
-		return true;
+		if (fSharedInputValues.getBoolean("ipb_elevator_beam_sensor")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
