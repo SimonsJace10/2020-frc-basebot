@@ -116,16 +116,16 @@ done_for_time_state:
 
 parallel_state:
   pl_floor_intake:
-    foreground_states: [st_collector_floor_intake, st_hopper_intake]
+    foreground_states: [st_collector_floor_intake, st_hopper_intake, st_elevator_stop]
 
   pl_prime:
-    foreground_states: [st_collector_extend, st_hopper_home]
+    foreground_states: [st_collector_extend, st_hopper_home, st_elevator_prime]
 
   pl_shoot:
-    foreground_states: [st_collector_extend, st_hopper_shoot]
+    foreground_states: [st_collector_extend, st_hopper_shoot, st_elevator_shoot]
 
   pl_protect:
-    foreground_states: [st_collector_retract, st_hopper_stop]
+    foreground_states: [st_collector_retract, st_hopper_stop, st_elevator_stop]
 
   pl_floor_intake_load_one_ball:
     foreground_states: [st_elevator_load_ball]

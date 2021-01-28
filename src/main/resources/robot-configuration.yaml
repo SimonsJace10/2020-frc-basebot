@@ -21,7 +21,7 @@ general:
 
     ss_hopper:
       priority_level_2: [st_hopper_zero]
-      priority_level_1: [st_hopper_home, st_hopper_collect, st_hopper_shoot]
+      priority_level_1: [st_hopper_home, st_hopper_intake, st_hopper_shoot]
       default: [st_hopper_stop]
 
     ss_elevator:

@@ -81,7 +81,7 @@ public class TeleopModeLogic extends AbstractModeLogic {
 			case "st_elevator_zero":
 				return !fSharedInputValues.getBoolean("ipb_elevator_has_been_zeroed");
 			// States
-			case "pl_floor_intake":
+			case "sq_floor_intake":
 				return mFloorIntake;
 			case "pl_prime":
 				return mPrime;

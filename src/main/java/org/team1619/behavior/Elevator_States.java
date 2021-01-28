@@ -17,7 +17,7 @@ import java.util.Set;
 public class Elevator_States implements Behavior {
 
 	private static final Logger sLogger = LogManager.getLogger(Elevator_States.class);
-	private static final Set<String> sSubsystems = Set.of("ss_hopper");
+	private static final Set<String> sSubsystems = Set.of("ss_elevator");
 
 	private final InputValues fSharedInputValues;
 	private final OutputValues fSharedOutputValues;
