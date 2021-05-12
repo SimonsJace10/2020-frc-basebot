@@ -1,4 +1,6 @@
 single_state:
+  st_drivetrain_single_joystick:
+    behavior: bh_drivetrain_single_joystick
 
 done_for_time_state:
 

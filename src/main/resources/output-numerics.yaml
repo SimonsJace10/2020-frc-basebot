@@ -1,5 +1,25 @@
 talon:
+  opn_left_bottom:
+    device_number: 00
+    inverted: true
+  opn_left_top:
+    device_number: 01
+    inverted: true
+  opn_right_bottom:
+    device_number: 14
+  opn_right_top:
+    device_number: 15
+  opn_intake:
+    device_number: 02
+  opn_pullback:
+    device_number: 13
 
 victor:
 
 motor_group:
+  opn_drivetrain_left:
+    master: opn_left_bottom
+    followers: [ opn_left_top ]
+  opn_drivetrain_right:
+    master: opn_right_bottom
+    followers: [opn_right_top]

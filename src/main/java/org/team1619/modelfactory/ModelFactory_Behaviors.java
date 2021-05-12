@@ -31,7 +31,8 @@ public class ModelFactory_Behaviors extends AbstractModelFactory {
 		sLogger.trace("Creating behavior '{}' of type '{}' with config '{}'", name, config.getType(), config.getData());
 
 		switch (name) {
-
+			case "bh_drivetrain_single_joystick":
+				return new Behavior_Single_Joystick(fSharedInputValues, fSharedOutputValues, config, fRobotConfiguration);
 			// State not found
 			default:
 				throw new ConfigurationException("Behavior " + name + " does not exist.");
